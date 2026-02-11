@@ -18,3 +18,40 @@ function printWeatherData(city) {
     });
 }
 printWeatherData("Sousse");
+
+
+function getbookData(isbn, callback) {
+    const url = `https://openlibrary.org/search.json?q=${isbn}`;
+
+    fetch(url)
+    .then((res) => res.json())
+    .then((bookData) => callback(null, bookData))
+    .catch((error) => callback(error, null));
+}
+
+function printBookData(isbn) {
+    getbookData(isbn, (error, data) => {
+        console.log("Title: " + data.docs[0].title);
+        console.log("Author: " + data.docs[0].author_name[0]);
+    });
+}
+printBookData("978-3-16-148410-0");
+
+function getNasaData(callback) {
+    const url= 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY';
+
+    fetch(url)
+    .then((res) => res.json())
+    .then((nasaData) => callback(null, nasaData))
+    .catch((error) => callback(error, null));
+}
+
+function printNasaData() {
+    getNasaData((error, data) => {
+        console.log("Title: " + data.title);
+        console.log("Date: " + data.date);
+        console.log("Image: " + data.url);
+    });
+}
+printNasaData();
+
